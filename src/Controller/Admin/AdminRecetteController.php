@@ -15,18 +15,20 @@ use Symfony\Component\HttpFoundation\Response;
 class AdminRecetteController extends AbstractController
 {
      private EntityManagerInterface $em;
+     private RecetteRepository $repository;
 
-     public function __construct(EntityManagerInterface $em)
+     public function __construct(EntityManagerInterface $em, RecetteRepository $repository)
      {
           $this->em = $em;
+          $this->repository = $repository;
      }
 
      /**
       * @Route("/admin", name="admin_index")
       */
-      public function index(RecetteRepository $recetteRepository): Response
+      public function index(): Response
       {
-           $recettes = $recetteRepository->findAll();
+           $recettes = $this->repository->findAll();
  
            return $this->render('admin/index.html.twig', [
                 'recettes' => $recettes, 
@@ -59,10 +61,25 @@ class AdminRecetteController extends AbstractController
      }
 
      /**
-       * @Route("/admin/edit/{id}", name="admin_edit")
-       */
+     * @Route("/admin/edit/{id}", name="admin_edit")
+     */
      public function edit(Request $request, int $id)
      {
+          $recette = $this->repository->find($id);
+          $form = $this->createForm(RecetteType::class, $recette);
+          $form->handleRequest($request);
+
+          if($form->isSubmitted() && $form->isValid())
+          {
+               $this->em->flush();
+               $this->addFlash('success', 'Votre recette a bien été mis à jour');
+               return $this->redirectToRoute('admin_index', [], 301);
+          }
+
+          return $this->render('admin/edit.html.twig', [
+               'menu' => 'admin',
+               'formRecette' => $form->createView()
+          ]);
 
      }
 }

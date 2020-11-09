@@ -28,7 +28,7 @@
                               <td>{{ recette.id }}</td>
                               <td>{{ recette.titre }}</td>
                               <td>
-                                   <button class="btn btn-default">Éditer</button>
+                                   <a href="{{ path('admin_edit', {id: recette.id} ) }}" class="btn btn-secondary">Éditer</a>
                                    <button class="btn btn-danger">Supprimer</button>
                               </td>
                          </tr>
