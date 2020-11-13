@@ -22,9 +22,11 @@
 						<li class="nav-item {% if menu is defined and menu == 'home' %} active {% endif %}">
 							<a class="nav-link" href="{{ path('home_index') }}">Home</a>
 						</li>
-						<li class="nav-item {% if menu is defined and menu == 'home' %} active {% endif %}">
-							<a class="nav-link" href="#">Proposer une recette</a>
-						</li>
+						{% if is_granted('ROLE_USER', app.user) %}
+							<li class="nav-item {% if menu is defined and menu == 'home' %} active {% endif %}">
+								<a class="nav-link" href="#">Proposer une recette</a>
+							</li>
+						{% endif %}
 						{% if is_granted('ROLE_ADMIN', app.user) %}
 							<li class="nav-item {% if menu is defined and menu == 'admin' %} active {% endif %}">
 								<a class="nav-link" href="{{ path('admin_index')}}">admin</a>
