@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Categorie;
 use App\Entity\Recette;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -37,6 +39,11 @@ class RecetteType extends AbstractType
             ])
             ->add('personne', NumberType::class, [
                 "required" => false,
+            ])
+            ->add('categorie', EntityType::class , [
+                "label" => "Choix de catégorie",
+                "class" => Categorie::class,
+                "choice_label" => "nom"
             ])
             //->add('createdAt')
         ;
