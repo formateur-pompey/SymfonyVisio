@@ -6,6 +6,7 @@ use App\Entity\Categorie;
 use App\Entity\Recette;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -44,6 +45,10 @@ class RecetteType extends AbstractType
                 "label" => "Choix de catégorie",
                 "class" => Categorie::class,
                 "choice_label" => "nom"
+            ])
+            ->add('imageFile', FileType::class, [
+                "label" => "Image de la recette", 
+                "required" => false
             ])
             //->add('createdAt')
         ;

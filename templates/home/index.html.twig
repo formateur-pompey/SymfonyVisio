@@ -5,26 +5,39 @@
 
 {% block body %}
 
-<div class="container">
-	<h1>
-		Bienvenue sur ma homepage
-	</h1>
+	<div class="container">
+		<h1>
+			Bienvenue sur ma homepage
+		</h1>
 
-	<div class="row mt-4">
-		{% for recette in recettes %}
-		<div class="col-md-4">
-			<div class="card" style="width: 18rem;">
-				<div class="card-body">
-					<h5 class="card-title">{{ recette.titre }}</h5>
-					<h6 class="card-subtitle mb-2 text-muted">{{ recette.createdAt|format_datetime() }}</h6>
-					<p class="card-text">{{recette.resumer}}</p>
-
-					<a href="{{ path('recette_show', {id: recette.id}) }}" class="card-link btn btn-primary">Voir la recette</a>
-				</div>
+		{% for message in app.flashes('success') %}
+			<div class="alert alert-success">
+				{{ message }}
 			</div>
-		</div>
 		{% endfor %}
+
+		<div class="row mt-4">
+			{% for recette in recettes %}
+				<div class="col-md-4">
+					<div class="card" style="width: 18rem;">
+						{% if recette.imageName %}
+							<img src="{{ vich_uploader_asset(recette, 'imageFile') }}" class="card-img-top" alt="">
+						{% else %}
+							<img src="{{ asset('images/recettes/not_found.gif') }}" class="card-img-top" alt="">
+						{% endif %}
+
+
+						<div class="card-body">
+							<h5 class="card-title">{{ recette.titre }}</h5>
+							<h6 class="card-subtitle mb-2 text-muted">{{ recette.createdAt|format_datetime() }}</h6>
+							<p class="card-text">{{recette.resumer}}</p>
+
+							<a href="{{ path('recette_show', {id: recette.id}) }}" class="card-link btn btn-primary">Voir la recette</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
 	</div>
-</div>
 
 {% endblock %}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Fiche de contact</title>
+</head>
+<body>
+     <h1>Fiche de contact</h1>
+
+     <p>
+          Monsieur ou Madame {{ contact.nom}} {{ contact.prenom }} a essayer de vous contactez
+
+          Vous pouvez la recontacter via son email : {{ contact.email }}
+
+          Voici son message :
+     </p>
+     <p>
+          {{ contact.message }}
+     </p>
+</body>
+</html>
